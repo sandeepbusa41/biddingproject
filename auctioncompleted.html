@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="fevi.png" sizes="192x192" type="image/png">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        #sec1 div{
+            height: 130px;
+            width: 100%;
+            background-color:rgb(140, 154, 180);
+        }
+        #sec1 div h1{
+            padding-left: 10px;
+            padding-top: 10px;
+        }
+        #sec1 div p{
+            padding-left: 10px;
+        }
+        footer{
+            position: relative;
+            top: 500px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="navdiv">
+            <ul>
+                <li><a href="./index.html">HOME</a></li>
+                <li><a href="./activeauctions.html">ACTIVEAUCTIONS</a></li>
+                <li><a href="./auctioncompleted.html">AUCTIONSCOMPLETED</a></li>
+                
+                <li><a href="./contactus.html">CONTACTUS</a></li>
+                <li><a href="./signin.html">SIGNIN</a></li>
+                <li><a id="signout">SIGNOUT</a></li>
+                <li><a id="navname"></a></li>
+            </ul>
+        </div>
+    </nav>
+    <section id="sec1">
+
+    </section>
+
+
+
+
+
+
+
+
+    <footer>
+        <div class="footer">
+            <img src="./sblogo.png">
+
+            <div class="foot2">
+                <ul>
+                    <li><a href="">Terms and Conditions |</a></li>
+                    <li><a href="">FAQs |</a></li>
+                    <li><a href="">AboutUs |</a></li>
+                    <li><a href="">ContactUS |</a></li>
+                    <li><a href="">How it work </a></li>
+                    
+                </ul>
+            </div>
+            <div class="foot3">
+                <ul>
+                    <li><a href=""><img src="./fblogo.jpg"></a></li>
+                    <li><a href=""><img src="./gitlogo.png"></a></li>
+                    <li><a href=""><img src="./instalogo.jpg"></a></li>
+                    <li><a href=""><img src="./linkedinlogo.webp"></a></li>
+                    
+                </ul>
+            </div>
+
+        </div>
+    </footer>
+    <script src="index.js"></script>
+    <script>
+        sec=document.getElementById('sec1')
+        buyer=JSON.parse(window.localStorage.getItem('buyerdetails'))
+        for(i of buyer){
+            div=document.createElement('div')
+            h1=document.createElement('h1')
+            h1.innerText=i.item
+            div.appendChild(h1)
+            p=document.createElement('p')
+            p.innerText='Bought by:'+i.name
+            div.appendChild(p)
+            p=document.createElement('p')
+            p.innerText='for price:'+i.amount
+            div.appendChild(p)
+
+            sec.appendChild(div)
+            console.log(i)
+
+        }
+        
+        
+    </script>
+</body>
+</html>

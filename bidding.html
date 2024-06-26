@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bidding Page</title>
+    <link rel="icon" href="fevi.png" sizes="192x192" type="image/png">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="bidding.css">
+    <style>
+        .displayingitem img {
+            width: 800px;
+            height: 500px;
+            border-radius: 10px;
+            position: relative;
+            left: 250px;
+        }
+        .displayingitem h1 {
+            position: relative;
+            left: 300px;
+            font-size: 40px;
+        }
+        .displayingitem p {
+            font-size: 20px;
+            position: relative;
+            left: 300px;
+        }
+        .displayingitem h2 {
+            position: relative;
+            left: 500px;
+        }
+        .formdiv {
+            position: relative;
+            left: 450px;
+            width: 300px;
+            height: 400px;
+        }
+        .bidding-buttons {
+            position: relative;
+            left: 300px;
+            margin-top: 20px;
+        }
+        .bidding-buttons label {
+            margin: 0 10px;
+            font-size: 20px;
+        }
+        .bidding-buttons input[type="radio"] {
+            margin-right: 5px;
+        }
+        #currentBidder {
+            position: relative;
+            left: 300px;
+            font-size: 24px;
+            color: blue;
+            margin-top: 20px;
+        }
+        #winner {
+            position: relative;
+            left: 300px;
+            font-size: 24px;
+            color: green;
+            margin-top: 20px;
+        }
+        #countdown {
+            position: relative;
+            left: 300px;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="navdiv">
+            <ul>
+                <li><a href="./index.html">HOME</a></li>
+                <li><a href="./activeauctions.html">ACTIVE AUCTIONS</a></li>
+                <li><a href="./auctioncompleted.html">AUCTIONS COMPLETED</a></li>
+                <li><a href="./contactus.html">CONTACT US</a></li>
+                <li><a href="./signin.html">SIGN IN</a></li>
+                <li><a id="signout">SIGN OUT</a></li>
+                <li><a id="navname"></a></li>
+            </ul>
+        </div>
+    </nav>
+    <section>
+        <div class="displayingitem">
+            <img id="itemimg"><br>
+            <h1></h1><br>
+            <p></p><br>
+            <h2></h2><br>
+        </div>
+        <div id="currentBidder" style="position:absolute; left: 500px; top:830px"></div>
+        <div class="formdiv">
+            <form id="bidForm">
+                <label for="bidamount">Enter Price:</label>
+                <input type="text" id="bidamount" disabled>
+                <span style="display: none; color:red">Enter Valid Number</span>
+                <span style="display: none; color:red">Bid Above Base Price</span>
+                <button type="submit">BID</button>
+                <span id="bid-message" style="display: none;">Waiting for others to bid, wait <span id="countdown-number">10</span> seconds to confirm your bid</span>
+            </form>
+        </div>
+        <div class="bidding-buttons">
+            <label><input type="radio" name="bidder" value="A"> A</label>
+            <label><input type="radio" name="bidder" value="B"> B</label>
+            <label><input type="radio" name="bidder" value="C"> C</label>
+        </div>
+        
+        <div id="winner"></div>
+        <div id="countdown" style="display: none;">
+            <p id="countdown-text"></p>
+        </div>
+    </section>
+    <footer>
+        <div class="footer">
+            <img src="./sblogo.png">
+            <div class="foot2">
+                <ul>
+                    <li><a href="">Terms and Conditions |</a></li>
+                    <li><a href="">FAQs |</a></li>
+                    <li><a href="">About Us |</a></li>
+                    <li><a href="">Contact Us |</a></li>
+                    <li><a href="">How it works</a></li>
+                </ul>
+            </div>
+            <div class="foot3">
+                <ul>
+                    <li><a href=""><img src="./fblogo.jpg"></a></li>
+                    <li><a href=""><img src="./gitlogo.png"></a></li>
+                    <li><a href=""><img src="./instalogo.jpg"></a></li>
+                    <li><a href=""><img src="./linkedinlogo.webp"></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script src="index.js"></script>
+    <script>
+        const bidobj = JSON.parse(window.localStorage.getItem('biddingitem'));
+        const itemimg = document.getElementById('itemimg');
+        const h1 = document.getElementsByTagName('h1')[0];
+        const p = document.getElementsByTagName('p')[0];
+        const h2 = document.getElementsByTagName('h2')[0];
+        const bidForm = document.getElementById('bidForm');
+        const bidAmountInput = document.getElementById('bidamount');
+        const bidButtons = document.querySelectorAll('.bidding-buttons input');
+        const currentBidderDiv = document.getElementById('currentBidder');
+        const winnerDiv = document.getElementById('winner');
+        const countdownDiv = document.getElementById('countdown');
+        const countdownNumberSpan = document.getElementById('countdown-number');
+        const bidMessageSpan = document.getElementById('bid-message');
+
+        itemimg.src = bidobj.image;
+        h1.innerText = bidobj.heading;
+        p.innerText = bidobj.desc;
+        h2.innerText = bidobj.amount;
+
+        let highestBid = parseInt(bidobj.amount.replace(/\D/g, ''));
+        let highestBidder = '';
+        let currentBidder = '';
+        let bidTimeout;
+        let countdown = 8;
+        let countdownInterval;
+
+        function alphCheck(v) {
+            return isNaN(v);
+        }
+
+        function placeBid(candidate, amount) {
+            if (amount > highestBid) {
+                highestBid = amount;
+                highestBidder = candidate;
+                //h2.innerText = `$${amount}`; 
+                currentBidderDiv.innerText = `${candidate} bidded for $${amount}`;
+
+                clearTimeout(bidTimeout);
+                clearInterval(countdownInterval);
+                countdown = 8;
+                updateCountdownDisplay();
+
+                bidTimeout = setTimeout(() => {
+                    alert(`${highestBidder} wins the bid with $${highestBid}`);
+                    const buyer = JSON.parse(window.localStorage.getItem('buyerdetails')) || [];
+                    const obj = {
+                        item: bidobj.heading,
+                        name: highestBidder,
+                        amount: highestBid
+                    };
+                    buyer.push(obj);
+                    window.localStorage.setItem('buyerdetails', JSON.stringify(buyer));
+                    window.open('./activeauctions.html');
+                }, 10000);
+            }
+        }
+
+        function updateCountdownDisplay() {
+            countdownDiv.style.display = 'block';
+            bidMessageSpan.style.display = 'block';
+            countdownNumberSpan.textContent = countdown;
+            countdown--;
+            if (countdown < 0) {
+                clearInterval(countdownInterval);
+            }
+        }
+
+        bidButtons.forEach(button => {
+            button.addEventListener('change', (e) => {
+                currentBidder = e.target.value;
+                bidAmountInput.disabled = false;
+            });
+        });
+
+        bidForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = bidAmountInput.value.trim();
+            if (!alphCheck(val) && val !== '') {
+                const amount = parseInt(val);
+                if (amount > highestBid) {
+                    placeBid(currentBidder, amount);
+                    countdown = 8;
+                    clearInterval(countdownInterval);
+                    countdownInterval = setInterval(updateCountdownDisplay, 1000);
+                } else {
+                    document.getElementById('bid-message').style.display = 'none';
+                    span[1].style.display = 'block';
+                }
+            } else {
+                span[0].style.display = 'block';
+                span[1].style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

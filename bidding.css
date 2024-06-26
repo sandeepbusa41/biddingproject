@@ -1,0 +1,67 @@
+
+.bidding-buttons input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 50px; 
+    height: 50px; 
+    border: 2px solid #4CAF50; 
+    border-radius: 50%; 
+    outline: none;
+    cursor: pointer; 
+    position: relative; 
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+ 
+  .bidding-buttons input[type="radio"]:checked::before {
+    content: ''; 
+    display: block; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 32px; 
+    height: 32px; 
+    background-color: #4CAF50; 
+    border-radius: 50%; 
+  }
+  
+  
+  .bidding-buttons label {
+    display: inline-block; 
+    margin-right: 15px; 
+    font-size: 16px; 
+    cursor: pointer;
+  }
+  
+  
+  .bidding-buttons label:hover {
+    color: #4CAF50; 
+  }
+  
+  
+  .bidding-buttons input[type="radio"]:focus {
+    border-color: #4CAF50;
+  }
+
+  .radio-container{
+    position: relative;
+  height: 100vh;
+  display: flex; 
+  justify-content: center; 
+   
+  background-color: #e0e0e0;
+
+  }
+
+  .bidding-buttons {
+    position: absolute;
+    top: -250px;
+    left: 60%;
+  transform: translateX(-50%);
+  width: 400px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  }
+  

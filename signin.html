@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="fevi.png" sizes="192x192" type="image/png">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .sigindiv{
+            position: relative;
+            border-radius: 8px;
+            left: 400px;
+            top: 80px;
+            margin: 10px;
+            padding: 20px;
+            width: 450px;
+            height: 330px;
+    
+            background-color:#bdb8b8
+    
+        }
+        form {
+            display: flex;
+            flex-direction: column; 
+        }
+        
+        form label {
+            margin-bottom: 5px; 
+        }
+        
+        form input,form button {
+            margin-bottom: 20px; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+        form button {
+            background-color: #333; 
+            color: white;
+            border: none; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+        }
+        
+        form button:hover {
+            background-color: #575757; 
+        }
+    </style>
+        
+</head>
+<body>
+    <nav>
+        <div class="navdiv">
+            <ul>
+                <li><a href="./index.html">HOME</a></li>
+                <li><a href="./activeauctions.html">ACTIVEAUCTIONS</a></li>
+                <li><a href="./auctioncompleted.html">AUCTIONSCOMPLETED</a></li>
+                <li><a href="./contactus.html">CONTACTUS</a></li>
+                <li><a href="./signin.html">SIGNIN</a></li>
+                <li><a id="signout">SIGNOUT</a></li>
+                <li><a id="navname"></a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+     <div class="sigindiv">
+        <form action="">
+            
+                <label for="uname">USERNAME</label>
+                <input type="text" id="uname">
+                <label for="pass">PASSWORD</label>
+                <input type="password" id="pass">
+                <span style="display: none;color:red">wrong password</span>
+                <span style="display: none;color:red">Username Doesn't exist</span>
+                <button id="btn">Submit</button>
+                <p>Don't have an account</p>
+                <a href="index.html">Create Account</a>
+        </form>
+
+     </div>
+     <br>
+     <br><br><br><br><br><br>v
+
+
+
+
+
+
+
+    <footer>
+        <div class="footer">
+            <img src="./sblogo.png">
+
+            <div class="foot2">
+                <ul>
+                    <li><a href="">Terms and Conditions |</a></li>
+                    <li><a href="">FAQs |</a></li>
+                    <li><a href="">AboutUs |</a></li>
+                    <li><a href="">ContactUS |</a></li>
+                    <li><a href="">How it work </a></li>
+                </ul>
+            </div>
+            <div class="foot3">
+                <ul>
+                    <li><a href=""><img src="./fblogo.jpg"></a></li>
+                    <li><a href=""><img src="./gitlogo.png"></a></li>
+                    <li><a href=""><img src="./instalogo.jpg"></a></li>
+                    <li><a href=""><img src="./linkedinlogo.webp"></a></li>
+                    
+                </ul>
+            </div>
+
+        </div>
+    </footer>
+    <script src="index.js"></script>
+    <script>
+        
+            userdetails=JSON.parse(window.localStorage.getItem('userdetails'))
+            details=document.getElementsByTagName('input')
+            para=document.getElementsByTagName('span')
+            btn=document.getElementById('btn')
+            if(details[0].value=='admin'){
+                if(details[1].value=='admin'){
+                    window.open('./adminpage.html')
+                }
+            }
+           
+            btn.addEventListener('click',(e)=>{
+                if(details[0].value=='admin'){
+                    if(details[1].value=='admin'){
+                        window.open('./adminpage.html')
+                    }
+                }
+                e.preventDefault();
+                z=1
+                for(i of userdetails){
+                    if(details[0].value==i.username){
+                        if(details[1].value==i.password){
+                            window.localStorage.setItem('isloggedin','true')
+                            window.localStorage.setItem('uname',JSON.stringify(i.username))
+                            window.open('./activeauctions.html')
+                            z=0
+                        }
+                        else{
+                            para[1].style.display='none'
+                            para[0].style.display='block'
+                            z=0
+                        }
+                    }
+                }
+                if(z==1){
+                    para[1].style.display='block'
+                }
+
+
+            })
+        
+            
+            
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="fevi.png" sizes="192x192" type="image/png">
+
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <nav>
+        <div class="navdiv">
+            <ul>
+                <li><a href="./index.html">HOME</a></li>
+                <li><a href="./activeauctions.html">ACTIVEAUCTIONS</a></li>
+                <li><a href="./auctioncompleted.html">AUCTIONSCOMPLETED</a></li>
+       
+                <li><a href="contactus.html">CONTACTUS</a></li>
+                <li><a href="signin.html">SIGNIN</a></li>
+                <li><a id="signout">SIGNOUT</a></li>
+                <li><a id="navname"></a></li>
+            </ul>
+        </div>
+
+
+    </nav>
+    <center><h1>Welcome to SB Bidders</h1></center>
+    <br><br>
+    <div class="cards">
+    <div class="secmidcontent">
+        <h2>SB BIDDERS is an auction platform recognised by government to conduct online auctions for sale and purchase.</h2>
+            <h3>It removes all barriers of geography,presence,time,space and small target audience propelled by a versatile,safe and secured engine approved by National Informatics Centre.Many users have
+            witnessed multifold increase in revenue in auctions conducted over adiverse range.</h3>
+
+    </div>
+    <div class="incards">
+        <h2>What SB BIDDERS provide</h2>
+        <br>
+        <ol>
+            <li>Buying</li>
+            <li>Selling</li>
+            <li>Reviewing</li>
+            <li>Participating Bids</li>
+        </ol>
+
+    </div>
+    </div>
+
+
+    <div class="midcontent">
+        <h1 id ='crtprfl'>Create Profile</h1>
+        <div class="loginbox">
+            <form action="">
+                <label for="fname">FIRSTNAME</label>
+                <input type="text" id="fname">
+                <span class="hide" style="display: none;color:red">firstname can not be null</span>
+                <span class="secondhide" style="display: none;color:red">firstname can't contain numbers</span>
+                <label for="lname">LASTNAME</label>
+                <input type="text" id="lname">
+                <span class="secondhide" style="display: none;color:red">Lastname can't contain numbers</span>
+                <span class="hide" style="display: none;color:red">Lastname can not be null</span>
+                <label for="uname">USERNAME</label>
+                <input type="text" id="uname">
+                <p id="p1" style="display: none;color:red">Username already exist,choose another</p>
+                <span class="hide" style="display: none;color:red">Username must contain 6 characters</span>
+                <span class="secondhide" style="display: none;color:red">first Character in username can't be number</span>
+                <label for="email">Email</label>
+                <input type="email" id="email">
+                <span class="hide" style="display: none;color:red">Enter valid email</span>
+                <label for="pass">Password</label>
+                <input type="password" id="pass">
+                <span class="hide" style="display: none;color:red">password must contain atleast 6 characters</span>
+                <label for="phone">Phone</label>
+                <input type="text" id="phone">
+                <span class="hide" style="display: none;color:red">Enter valid phone number</span>
+                <button id="btn">Submit</button>
+                <p>Already have an account</p>
+                <a href="signin.html">Signin</a>
+
+            </form>
+        </div>
+
+    </div>
+    <br><br><br>
+    <footer>
+        <div class="footer">
+            <img src="./sblogo.png">
+
+            <div class="foot2">
+                <ul>
+                    <li><a href="">Terms and Conditions |</a></li>
+                    <li><a href="">FAQs |</a></li>
+                    <li><a href="">AboutUs |</a></li>
+                    <li><a href="">ContactUS |</a></li>
+                    <li><a href="">How it work </a></li>
+                    
+                </ul>
+            </div>
+            <div class="foot3">
+                <ul>
+                    <li><a href=""><img src="./fblogo.jpg"></a></li>
+                    <li><a href=""><img src="./gitlogo.png"></a></li>
+                    <li><a href=""><img src="./instalogo.jpg"></a></li>
+                    <li><a href=""><img src="./linkedinlogo.webp"></a></li>
+                    
+                </ul>
+            </div>
+
+        </div>
+    </footer>
+    <script src="index.js"></script>
+    <script>
+        btn=document.getElementById('btn')
+        btn.addEventListener('click',(e)=>{
+            e.preventDefault();
+            function funone(v){
+                let z=0
+                for(let i=0;i<v.length;i++){
+                    if(!isNaN(v[i])){
+                        z=1
+                        break
+
+                    }
+                }
+                return z
+            }
+            
+            details=document.getElementsByTagName('input')
+            para=document.getElementsByClassName('hide')
+            para2=document.getElementsByClassName('secondhide')
+            para3=document.getElementById('p1')
+            usersdb=JSON.parse(window.localStorage.getItem('userdetails')) || []
+            function funtwo(x){
+                
+                for(let user of usersdb){
+                    if(user.username==x){
+                        
+                       return true
+                        
+                    }
+                    
+                }
+                return false   
+        }
+
+            para2[0].style.display='none'
+            para2[1].style.display='none'
+            para2[2].style.display='none'
+            if(details[0].value==''){
+                para[0].style.display='block'
+                
+            }
+            else{
+                para[0].style.display='none'
+                let z=0
+                v=details[0].value
+                
+                if(funone(v)){
+                    para2[0].style.display='block'
+                }
+                else{
+                    if(details[1].value==''){
+                        para[1].style.display='block'
+                    }
+                    else{
+                        para[1].style.display='none'
+                        v=details[1].value
+                         if(funone(v)){
+                            para2[1].style.display='block'
+
+                         }
+                         else{
+                            if(!isNaN(details[2].value[0])){
+                                para[2].style.display='none'
+                                para2[2].style.display='block'
+
+                            }
+                            else if(details[2].value.length<=5){
+                                para[2].style.display='block'
+                            }
+                            else if(funtwo(details[2].value)){
+                                para3.style.display='block'
+                                
+                                
+
+                            }
+                            else{
+                                
+                                para3.style.display='none'
+                                para[2].style.display='none'
+                                para2[2].style.display='none'
+                                if(details[3].value==''){
+                                    para[3].style.display='block'
+                                }
+                                else{
+                                    z=0
+                                    v=details[3].value
+                                    for(i=0;i<v.length;i++){
+                                        if(v[i]=='@'){
+                                            z=1
+                                            break
+                                        }
+                                    }
+                                    if(z!=1){
+                                        para[3].style.display='block'
+                                    }
+                                    else{
+                                        para[3].style.display='none'
+                                        if(details[4].value.length<=5){
+                                            para[4].style.display='block'
+                                        }
+                                        else{
+                                            para[4].style.display='none'
+                                            v=details[5].value
+                                            arr=['1','2','3','4','5','0']
+                                            if(details[5].value.length!=10){
+                                                para[5].style.display='block'
+                                            }
+                                            else if(arr.includes(v[0])){
+                                                para[5].style.display='block'
+                                            }
+                                            else{
+                                                para[5].style.display='none'
+                                                
+
+
+                                                 obj={
+                                                    username:details[2].value,
+                                                    password:details[4].value,
+                                                }
+                                                usersdb.push(obj)
+                                                JSON.stringify(usersdb)
+                                                window.localStorage.setItem('userdetails',JSON.stringify(usersdb))
+                                                window.open('./signin.html') 
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                         }
+                    }
+                }
+                    
+            }
+        })
+ 
+
+
+
+    </script>
+    
+
+</body>
+</html>

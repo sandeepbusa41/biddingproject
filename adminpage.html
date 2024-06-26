@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="fevi.png" sizes="192x192" type="image/png">
+    <style>
+        table,tr,td,th{
+            border: 2px solid black;
+            border-collapse:collapse ;
+        }
+        section div{
+            height: 150px;
+            width: 100%;
+            background-color:rgb(140, 154, 180);
+        }
+        section div h1{
+            padding-left: 10px;
+            padding-top: 10px;
+        }
+        section div p{
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Users Details</h1>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+        </tr>
+
+    </table>
+    <section>
+        <h1>COMMENTS</h1>
+
+    </section>
+
+
+    <script>
+        table=document.getElementsByTagName('table')
+        users=JSON.parse(window.localStorage.getItem('userdetails'))
+        
+        for(i of users){
+            tr=document.createElement('tr')
+            td=document.createElement('td')
+            td.innerText=i.username
+            tr.appendChild(td)
+            td=document.createElement('td')
+            td.innerText=i.password
+            tr.appendChild(td)
+            table[0].appendChild(tr)
+        }
+
+
+        userscomments=JSON.parse(window.localStorage.getItem('userscomments'))
+        sec=document.getElementsByTagName('section')
+        for(i of userscomments){
+            div=document.createElement('div')
+            h1=document.createElement('h1')
+            h1.innerText=i.name
+            div.appendChild(h1)
+            p=document.createElement('p')
+            p.innerText=i.email
+            div.appendChild(p)
+            p=document.createElement('p')
+            p.innerText=i.phone
+            div.appendChild(p)
+            p=document.createElement('p')
+            p.innerText=i.comment
+            div.appendChild(p)
+            sec[0].appendChild(div)
+            
+        }
+    </script>
+</body>
+</html>
